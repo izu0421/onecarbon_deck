@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneCarbon — Investor deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="vendor/chart.umd.js"></script>
+<style>
+:root {
+  --accent:#456BB7;
+  --accent-dark:#2f4f8f;
+  --accent-soft:#E2E9F4;
+  --accent-tint:#F0F4FA;
+  --bg:#F7F5F0;
+  --bg-deep:#EDEAE3;
+  --surface:#FFFFFF;
+  --text:#1A1A18;
+  --text-muted:#555555;
+  --text-faint:#888888;
+  --border:rgba(0,0,0,0.08);
+  --ink:#0E1521;
+  --gold:#C9A961;
+  --rs:10px; --rm:20px; --rl:30px; --rp:100px;
+  --serif:'DM Sans', system-ui, sans-serif;
+  --sans:'Outfit', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:400;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:500;letter-spacing:-0.01em}
+
+.deck{scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh;scroll-behavior:smooth}
+.slide{scroll-snap-align:start;scroll-snap-stop:always;height:100vh;width:100vw;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:5vh 5vw;background:var(--bg)}
+.slide.surface{background:var(--surface)}
+.slide.dark{background:var(--ink);color:var(--surface)}
+.slide.accent{background:var(--accent-dark);color:var(--surface)}
+.slide.tint{background:var(--accent-tint)}
+
+/* Frame elements */
+.frame-mark{position:absolute;top:3vh;right:3vw;display:flex;align-items:center;gap:8px;font-family:var(--serif);font-size:14px;font-weight:500;color:var(--text)}
+.frame-mark .lg{font-weight:700;color:var(--accent)}
+.dark .frame-mark, .accent .frame-mark{color:var(--surface)}
+.dark .frame-mark .lg, .accent .frame-mark .lg{color:var(--accent-soft)}
+.frame-num{position:absolute;bottom:3vh;right:3vw;font-family:var(--serif);font-size:11px;letter-spacing:0.16em;color:var(--text-faint);text-transform:uppercase;font-weight:500}
+.dark .frame-num, .accent .frame-num{color:rgba(255,255,255,0.5)}
+.frame-foot{position:absolute;bottom:3vh;left:3vw;font-family:var(--sans);font-size:11px;letter-spacing:0.06em;color:var(--text-faint)}
+.dark .frame-foot, .accent .frame-foot{color:rgba(255,255,255,0.5)}
+
+/* Typography */
+.eyebrow{display:inline-block;font-family:var(--serif);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;padding:6px 0}
+.dark .eyebrow, .accent .eyebrow{color:var(--accent-soft)}
+.eyebrow::before{content:'';display:inline-block;width:28px;height:1.5px;background:currentColor;vertical-align:middle;margin-right:14px;opacity:.7;border-radius:2px}
+h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0.015em;color:var(--text);margin:0.2em 0 0.4em;font-weight:500;max-width:1200px}
+.dark h1.headline, .accent h1.headline{color:var(--surface)}
+.headline em{font-style:italic;color:var(--accent);font-weight:500}
+.dark .headline em, .accent .headline em{color:var(--accent-soft)}
+.subhead{font-family:var(--sans);font-size:clamp(15px, 1.2vw, 19px);line-height:1.55;color:var(--text-muted);font-weight:400;max-width:920px}
+.dark .subhead, .accent .subhead{color:rgba(255,255,255,0.8)}
+.tag{font-family:var(--serif);font-size:11px;letter-spacing:0.14em;color:var(--text-faint);text-transform:uppercase;font-weight:500}
+.dark .tag, .accent .tag{color:rgba(255,255,255,0.55)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.9s cubic-bezier(.2,.6,.1,1), transform 0.9s cubic-bezier(.2,.6,.1,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal-d1{transition-delay:.08s}
+.reveal-d2{transition-delay:.18s}
+.reveal-d3{transition-delay:.28s}
+.reveal-d4{transition-delay:.38s}
+.reveal-d5{transition-delay:.48s}
+.reveal-d6{transition-delay:.58s}
+
+/* Buttons (mimicking site style) */
+.pill{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:var(--rp);background:var(--accent);color:var(--surface);font-family:var(--serif);font-size:14px;font-weight:600;text-decoration:none;transition:background .25s}
+.pill.ghost{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+.dark .pill.ghost, .accent .pill.ghost{color:var(--surface);border-color:rgba(255,255,255,0.3)}
+
+/* ============ Cover ============ */
+.cover{padding:0}
+.cover-grid{display:grid;grid-template-columns:1.1fr 0.9fr;height:100%}
+.cover-left{padding:8vh 6vw;display:flex;flex-direction:column;justify-content:space-between;position:relative;background:var(--bg)}
+.cover-right{background:linear-gradient(160deg, var(--accent) 0%, var(--accent-dark) 100%);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.brand{display:flex;align-items:center;gap:12px;z-index:2}
+.brand-name{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:-0.01em}
+.brand-name span{color:var(--accent);font-weight:700}
+.brand-sub{display:block;font-family:var(--serif);font-size:10px;letter-spacing:0.22em;color:var(--text-faint);text-transform:uppercase;margin-top:3px;font-weight:500}
+.cover-title{z-index:2}
+.cover-title h1{font-family:var(--serif);font-weight:500;font-size:clamp(52px, 5.6vw, 88px);line-height:1;letter-spacing:-0.03em;color:var(--text)}
+.cover-title h1 .accent{font-style:italic;color:var(--accent);font-weight:500}
+.cover-title p{font-family:var(--sans);font-size:clamp(17px, 1.4vw, 22px);line-height:1.4;color:var(--text-muted);margin-top:1.2em;max-width:560px;font-weight:300}
+.cover-meta{z-index:2;font-family:var(--sans);font-size:14px;line-height:1.85;color:var(--text-muted)}
+.cover-meta .name{font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;letter-spacing:-0.005em}
+.cover-meta a{font-family:var(--serif);font-size:12px;color:var(--accent);letter-spacing:0.04em;font-weight:600;text-decoration:none;margin-right:1em;text-transform:uppercase}
+
+/* Cover right SVG/particles */
+.cover-art{position:absolute;inset:0}
+.cover-tag{position:absolute;bottom:5%;left:6%;right:6%;display:flex;justify-content:space-between;color:rgba(255,255,255,0.6);font-family:var(--serif);font-size:10px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500}
+
+/* ============ Problem stat ============ */
+.problem{display:grid;grid-template-columns:1.05fr 0.95fr;gap:5vw;align-items:center;padding:7vh 7vw}
+.bigstat{font-family:var(--serif);font-weight:500;font-size:clamp(120px, 14vw, 240px);line-height:0.85;color:var(--accent);letter-spacing:-0.04em}
+.bigstat .pct{font-size:0.4em;color:var(--text);vertical-align:top;margin-left:6px;font-style:italic;font-weight:500}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:2vw;margin-top:3vh;padding-top:2.5vh;border-top:1px solid var(--border)}
+.stat-item .n{font-family:var(--serif);font-size:clamp(24px, 2.4vw, 36px);color:var(--text);font-weight:500;line-height:1.1;letter-spacing:-0.005em;white-space:nowrap}
+.stat-item .n em{font-style:italic;color:var(--accent)}
+.stat-item .l{font-family:var(--serif);font-size:11px;letter-spacing:0.14em;color:var(--text-faint);text-transform:uppercase;margin-top:8px;font-weight:500}
+
+/* ============ Insight ============ */
+.insight{padding:6vh 7vw}
+.gut-brain{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:1.5vw;align-items:center;margin-top:3vh}
+.gb-card{background:var(--surface);border-radius:var(--rl);padding:4vh 3vw;border:1px solid var(--border);text-align:center;position:relative}
+.gb-card .icon{width:80px;height:80px;background:var(--accent-soft);border-radius:50%;margin:0 auto 2vh;display:flex;align-items:center;justify-content:center}
+.gb-card .icon svg{width:42px;height:42px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.gb-card h3{font-family:var(--serif);font-size:24px;color:var(--text);margin-bottom:8px;font-weight:500}
+.gb-card p{font-family:var(--sans);font-size:14px;color:var(--text-muted);line-height:1.6}
+.gb-arrow{font-family:var(--serif);font-size:36px;color:var(--accent);font-weight:300;opacity:0.7}
+
+/* ============ Solution ============ */
+.solution{padding:0}
+.solution-grid{display:grid;grid-template-columns:0.9fr 1.1fr;height:100%}
+.solution-left{padding:8vh 5vw;background:var(--accent-dark);color:var(--surface);display:flex;flex-direction:column;justify-content:center;position:relative}
+.solution-right{padding:8vh 5vw;background:var(--bg);display:flex;flex-direction:column;justify-content:center}
+.solution-left h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px, 3vw, 48px);line-height:1.1;color:var(--surface);letter-spacing:-0.015em}
+.solution-left h1 em{font-style:italic;color:var(--accent-soft);font-weight:500}
+.solution-left p{font-family:var(--sans);font-size:15px;line-height:1.55;color:rgba(255,255,255,0.78);margin-top:1.5em;max-width:520px}
+.solution-features{display:grid;gap:2.4vh;max-width:520px}
+.sf-item{display:flex;gap:14px;align-items:flex-start;padding:1.6vh 0;border-bottom:1px solid var(--border)}
+.sf-item:last-child{border-bottom:0}
+.sf-num{font-family:var(--serif);font-style:italic;color:var(--accent);font-size:22px;font-weight:500;flex-shrink:0;margin-top:3px}
+.sf-content h4{font-family:var(--serif);font-size:19px;color:var(--text);margin-bottom:4px;font-weight:600}
+.sf-content p{font-family:var(--sans);font-size:14px;color:var(--text-muted);line-height:1.55}
+
+/* ============ Science publications ============ */
+.science{padding:6vh 7vw}
+.pubs{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4vw;margin-top:5vh}
+.pub{background:var(--surface);border-radius:var(--rm);padding:2.8vh 1.8vw;border:1px solid var(--border)}
+.pub .pub-tag{font-family:var(--serif);font-size:10px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;font-weight:600}
+.pub .pub-title{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--text);margin:8px 0 12px;line-height:1.3}
+.pub .pub-meta{font-family:var(--sans);font-size:13px;color:var(--text-muted);line-height:1.55}
+.pub .pub-id{font-family:var(--serif);font-size:10px;letter-spacing:0.12em;color:var(--text-faint);margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-weight:500}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2vw;margin-top:5vh;padding-top:4vh;border-top:1px solid var(--border)}
+.ss-item .n{font-family:var(--serif);font-size:52px;color:var(--accent);font-weight:500;line-height:1;letter-spacing:-0.01em}
+.ss-item .n em{font-style:italic;color:var(--text)}
+.ss-item .l{font-family:var(--sans);font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.45;max-width:200px}
+
+/* ============ Product ============ */
+.product-slide{padding:6vh 7vw}
+.product-hero{display:grid;grid-template-columns:1.05fr 0.95fr;gap:5vw;align-items:center;margin-top:3vh}
+.product-img-wrap{aspect-ratio:1/1;background:linear-gradient(160deg, var(--accent-soft), var(--bg));border-radius:var(--rl);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-img-wrap img{width:90%;height:90%;object-fit:contain}
+.product-features{display:grid;gap:1.6vh}
+.pf-item{display:grid;grid-template-columns:auto 1fr;gap:1vw;padding:1.5vh 0;border-bottom:1px solid var(--border);align-items:center}
+.pf-item:last-child{border-bottom:0}
+.pf-pill{font-family:var(--serif);font-size:11px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;font-weight:600;background:var(--accent-soft);padding:5px 10px;border-radius:var(--rp);white-space:nowrap}
+.pf-text{font-family:var(--sans);font-size:16px;color:var(--text);line-height:1.4}
+.pf-text b{font-family:var(--serif);font-weight:600}
+
+/* ============ How it works (journey) ============ */
+.journey{padding:6vh 7vw}
+.journey-track{display:grid;grid-template-columns:repeat(4,1fr);gap:2vw;margin-top:5vh;position:relative}
+.journey-track::before{content:'';position:absolute;top:48px;left:8%;right:8%;height:2px;background:linear-gradient(90deg, var(--accent-soft) 0%, var(--accent) 100%)}
+.jt-step{position:relative}
+.jt-dot{width:24px;height:24px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);margin-bottom:2vh;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:12px;color:var(--accent);font-weight:700}
+.jt-step h4{font-family:var(--serif);font-size:22px;color:var(--text);font-weight:500;margin-bottom:1vh}
+.jt-step p{font-family:var(--sans);font-size:14px;color:var(--text-muted);line-height:1.6}
+
+/* ============ Pilot validation ============ */
+.pilot{padding:6vh 7vw}
+.pilot-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;margin-top:5vh}
+.ps-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:3.5vh 2vw;border-top:4px solid var(--accent);position:relative}
+.ps-card:nth-child(2){border-top-color:var(--accent-dark)}
+.ps-card:nth-child(3){border-top-color:#7995C9}
+.ps-card .ps-big{font-family:var(--serif);font-weight:500;font-size:72px;color:var(--accent);line-height:0.9;letter-spacing:-0.02em}
+.ps-card:nth-child(2) .ps-big{color:var(--accent-dark)}
+.ps-card:nth-child(3) .ps-big{color:#7995C9}
+.ps-card .ps-big em{font-style:italic}
+.ps-card .ps-l{font-family:var(--sans);font-size:14.5px;color:var(--text-muted);margin-top:1.5em;line-height:1.55;max-width:280px}
+.ps-card .ps-cite{font-family:var(--serif);font-size:10px;letter-spacing:0.14em;color:var(--text-faint);text-transform:uppercase;margin-top:1.5em;padding-top:1.5em;border-top:1px solid var(--border);font-weight:500}
+
+/* ============ PROFILE trial ============ */
+.trial{padding:0}
+.trial-grid{display:grid;grid-template-columns:1.1fr 0.9fr;height:100%}
+.trial-left{padding:8vh 5vw;display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
+.trial-right{padding:8vh 4vw;background:var(--accent);color:var(--surface);display:flex;flex-direction:column;justify-content:center;position:relative}
+.trial-right::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 50%)}
+.trial-right > *{position:relative;z-index:1}
+.trial-id{display:inline-block;font-family:var(--serif);font-size:11px;letter-spacing:0.18em;color:var(--surface);background:rgba(255,255,255,0.15);padding:6px 14px;border-radius:var(--rp);text-transform:uppercase;font-weight:600;margin-bottom:2em}
+.trial-num{font-family:var(--serif);font-weight:500;font-size:clamp(72px, 8vw, 140px);line-height:0.9;color:var(--surface);letter-spacing:-0.03em;margin-bottom:0.3em}
+.trial-num em{font-style:italic;color:var(--accent-soft);font-weight:500}
+.trial-label{font-family:var(--sans);font-size:17px;color:rgba(255,255,255,0.9);font-weight:300;max-width:380px;line-height:1.45}
+
+/* ============ Commerce / pricing ============ */
+.commerce{padding:6vh 7vw}
+.skus{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5vw;margin-top:4vh}
+.sku{background:var(--surface);border:1px solid var(--border);border-radius:var(--rl);padding:3vh 2vw;position:relative;transition:transform .25s,box-shadow .25s}
+.sku:hover{transform:translateY(-4px);box-shadow:0 12px 30px -10px rgba(0,0,0,0.1)}
+.sku.featured{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.sku.featured h4, .sku.featured .sku-price, .sku.featured .sku-desc, .sku.featured .sku-tag{color:var(--surface)}
+.sku.featured .sku-tag{background:rgba(255,255,255,0.18)}
+.sku-tag{display:inline-block;font-family:var(--serif);font-size:10px;letter-spacing:0.14em;color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:var(--rp);text-transform:uppercase;font-weight:600;margin-bottom:1.4em}
+.sku h4{font-family:var(--serif);font-size:20px;color:var(--text);font-weight:500;margin-bottom:0.5em}
+.sku-price{font-family:var(--serif);font-weight:500;font-size:48px;color:var(--text);line-height:1;margin-bottom:0.5em;letter-spacing:-0.02em}
+.sku-price em{font-style:italic;color:var(--accent)}
+.sku.featured .sku-price em{color:var(--accent-soft)}
+.sku-desc{font-family:var(--sans);font-size:14px;color:var(--text-muted);line-height:1.55}
+.commerce-foot{margin-top:5vh;padding-top:3vh;border-top:1px solid var(--border);display:flex;gap:3vw;align-items:center;flex-wrap:wrap}
+.commerce-foot .label{font-family:var(--serif);font-size:11px;letter-spacing:0.16em;color:var(--text-faint);text-transform:uppercase;font-weight:500}
+.commerce-foot .value{font-family:var(--serif);font-size:32px;color:var(--text);font-weight:500;letter-spacing:-0.01em}
+.commerce-foot .value em{font-style:italic;color:var(--accent)}
+
+/* ============ Recognition / awards ============ */
+.recognition{padding:6vh 7vw;background:var(--bg-deep)}
+.awards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3vw;margin-top:4vh;align-items:center}
+.aw-card{background:var(--surface);border-radius:var(--rl);padding:4vh 2vw;text-align:center;border:1px solid var(--border);min-height:240px;display:flex;flex-direction:column;justify-content:center}
+.aw-card img{height:48px;width:auto;max-width:80%;margin:0 auto 2vh;object-fit:contain;filter:grayscale(0.1)}
+.aw-card .aw-title{font-family:var(--serif);font-size:15px;color:var(--text);font-weight:600;margin-bottom:0.4em;letter-spacing:-0.005em}
+.aw-card .aw-desc{font-family:var(--sans);font-size:12px;color:var(--text-muted);line-height:1.5}
+
+/* ============ Business model / Strategy ============ */
+.strategy{padding:6vh 7vw}
+.strat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.4vw;margin-top:4vh}
+.strat-card{background:var(--surface);border-radius:var(--rl);padding:4vh 2.4vw;border:1px solid var(--border);position:relative}
+.strat-card.featured{background:var(--accent-tint);border-color:var(--accent-soft)}
+.strat-tag{display:inline-block;font-family:var(--serif);font-size:11px;letter-spacing:0.16em;color:var(--surface);background:var(--accent-dark);padding:6px 14px;border-radius:var(--rp);text-transform:uppercase;font-weight:600;margin-bottom:1.5em}
+.strat-card.featured .strat-tag{background:var(--accent)}
+.strat-card h3{font-family:var(--serif);font-size:30px;color:var(--text);font-weight:500;margin-bottom:0.4em;letter-spacing:-0.01em}
+.strat-card .strat-lead{font-family:var(--sans);font-size:15.5px;color:var(--text-muted);line-height:1.55;margin-bottom:1.6em}
+.strat-card ul{list-style:none;padding-left:0}
+.strat-card li{font-family:var(--sans);font-size:14px;color:var(--text);padding:8px 0;padding-left:22px;position:relative;line-height:1.45}
+.strat-card li::before{content:'';position:absolute;left:0;top:14px;width:8px;height:8px;border:2px solid var(--accent);border-right:0;border-bottom:0;transform:rotate(45deg)}
+
+/* ============ Market ============ */
+.market-slide{padding:6vh 7vw}
+.market-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:5vw;align-items:center;margin-top:3vh}
+.market-chart{height:55vh;max-height:520px;position:relative}
+.market-chart canvas{width:100%!important;height:100%!important}
+.market-points{display:grid;gap:2.4vh}
+.mp-item{padding:1.6vh 0;border-left:3px solid var(--accent);padding-left:1.5vw;border-bottom:0}
+.mp-item .mp-l{font-family:var(--serif);font-size:11px;letter-spacing:0.16em;color:var(--accent);text-transform:uppercase;font-weight:600}
+.mp-item .mp-n{font-family:var(--serif);font-size:36px;color:var(--text);font-weight:500;line-height:1;margin-top:6px;letter-spacing:-0.01em}
+.mp-item .mp-n em{font-style:italic;color:var(--accent)}
+.mp-item .mp-d{font-family:var(--sans);font-size:14px;color:var(--text-muted);margin-top:6px;line-height:1.5;max-width:380px}
+
+/* ============ Roadmap ============ */
+.roadmap{padding:7vh 7vw}
+.rm-track{position:relative;margin-top:5vh;padding:0 1vw}
+.rm-line{position:absolute;top:42px;left:5%;right:5%;height:2px;background:linear-gradient(90deg, var(--accent-soft), var(--accent) 60%, var(--accent-dark))}
+.rm-stages{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5vw;position:relative}
+.rm-stage .dot{width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--accent);margin-bottom:1.6vh}
+.rm-stage:nth-child(4) .dot, .rm-stage:nth-child(5) .dot{background:var(--accent-tint);border-color:var(--accent)}
+.rm-stage:last-child .dot{background:var(--accent);border-color:var(--accent)}
+.rm-stage .yr{font-family:var(--serif);font-size:11px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.rm-stage h4{font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;margin-bottom:1.2vh;letter-spacing:-0.005em}
+.rm-stage ul{list-style:none;font-family:var(--sans);font-size:12.5px;color:var(--text-muted);line-height:1.7}
+.rm-stage li{padding-left:14px;position:relative;padding-bottom:4px}
+.rm-stage li::before{content:'·';position:absolute;left:4px;color:var(--accent);font-weight:600}
+
+/* ============ Team ============ */
+.team-slide{padding:6vh 7vw}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.4vw;margin-top:4vh}
+.tm-card{text-align:center}
+.tm-avatar{aspect-ratio:1/1;border-radius:50%;overflow:hidden;width:140px;height:140px;margin:0 auto 2vh;background:var(--bg-deep);border:3px solid var(--surface);box-shadow:0 8px 20px -6px rgba(0,0,0,0.1)}
+.tm-avatar img{width:100%;height:100%;object-fit:cover}
+.tm-card h4{font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;margin-bottom:0.3em;letter-spacing:-0.005em}
+.tm-card .role{font-family:var(--serif);font-size:12px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:1em}
+.tm-card .bio{font-family:var(--sans);font-size:12.5px;color:var(--text-muted);line-height:1.55;max-width:280px;margin:0 auto}
+.advisor-row{margin-top:5vh;padding-top:4vh;border-top:1px solid var(--border);display:flex;gap:3vw;align-items:center;justify-content:center}
+.advisor-row .av-label{font-family:var(--serif);font-size:11px;letter-spacing:0.18em;color:var(--text-faint);text-transform:uppercase;font-weight:500}
+.advisor-card{display:flex;gap:1.5vw;align-items:center;max-width:560px}
+.advisor-card .ac-avatar{width:80px;height:80px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--bg-deep)}
+.advisor-card .ac-avatar img{width:100%;height:100%;object-fit:cover}
+.advisor-card h4{font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;letter-spacing:-0.005em;margin-bottom:0.2em}
+.advisor-card .role{font-family:var(--serif);font-size:11px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:0.4em}
+.advisor-card .bio{font-family:var(--sans);font-size:13px;color:var(--text-muted);line-height:1.55}
+
+/* ============ The Ask ============ */
+.ask{padding:0}
+.ask-grid{display:grid;grid-template-columns:1.2fr 0.8fr;height:100%}
+.ask-left{padding:8vh 5vw;background:var(--ink);color:var(--surface);display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.ask-left::before{content:'';position:absolute;right:-30%;top:-20%;width:80%;aspect-ratio:1;background:radial-gradient(circle, var(--accent) 0%, transparent 70%);opacity:0.25;filter:blur(60px)}
+.ask-left > *{position:relative;z-index:1}
+.ask-right{background:linear-gradient(160deg, var(--accent) 0%, var(--accent-dark) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6vh 4vw;color:var(--surface);position:relative}
+.ask-right::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%, rgba(255,255,255,0.18), transparent 50%)}
+.ask-right > *{position:relative;z-index:1}
+.ask-amount{font-family:var(--serif);font-weight:500;font-size:clamp(100px, 14vw, 220px);line-height:0.9;letter-spacing:-0.03em;color:var(--surface);font-style:italic}
+.ask-amount .pre{font-style:normal;font-size:0.45em;vertical-align:top;color:var(--accent-soft);font-weight:500}
+.ask-amount .post{font-style:italic;color:var(--accent-soft);font-size:0.5em}
+.ask-cap{font-family:var(--serif);font-size:12px;letter-spacing:0.22em;color:var(--accent-soft);text-transform:uppercase;font-weight:600;margin-bottom:0.5em}
+.ask-desc{font-family:var(--sans);font-size:18px;color:rgba(255,255,255,0.88);line-height:1.45;max-width:340px;text-align:center;margin-top:1.5em}
+.ask-left h1{font-family:var(--serif);font-size:clamp(38px,4.4vw,60px);font-weight:500;color:var(--surface);line-height:1.05;letter-spacing:-0.02em;max-width:760px}
+.ask-left h1 em{font-style:italic;color:var(--accent-soft);font-weight:500}
+.use-of-funds{display:grid;gap:1.6vh;margin-top:4vh;max-width:560px}
+.uof-item{display:grid;grid-template-columns:auto 1fr auto;gap:1.5vw;align-items:center;padding:1.4vh 0;border-bottom:1px solid rgba(255,255,255,0.12)}
+.uof-pct{font-family:var(--serif);font-weight:500;font-size:32px;color:var(--accent-soft);font-style:italic;letter-spacing:-0.01em;min-width:90px}
+.uof-label{font-family:var(--sans);font-size:15px;color:rgba(255,255,255,0.85);line-height:1.4}
+.uof-amt{font-family:var(--serif);font-size:14px;color:var(--surface);font-weight:600}
+.ask-contact{display:flex;gap:2vw;align-items:center;flex-wrap:wrap;font-family:var(--serif);font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.06em;text-transform:uppercase;font-weight:500}
+.ask-contact a{color:var(--surface);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:2px;transition:border-color .2s}
+.ask-contact a:hover{border-color:var(--accent-soft)}
+
+/* ============ Helpers ============ */
+.kbd-hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-size:10px;letter-spacing:0.16em;color:var(--text-faint);text-transform:uppercase;opacity:0.7;z-index:100;pointer-events:none;background:rgba(247,245,240,0.85);backdrop-filter:blur(8px);padding:8px 18px;border-radius:var(--rp);transition:opacity .8s ease;font-weight:600}
+.kbd-hint.fade{opacity:0}
+.kbd-hint kbd{display:inline-block;padding:2px 6px;margin:0 4px;background:var(--ink);color:var(--surface);border-radius:4px;font-size:9px;font-family:var(--serif)}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:200;transition:width .3s ease}
+.counter{display:inline-block}
+
+@media (max-width:900px){
+  .slide{padding:5vh 6vw}
+  .cover-grid,.problem,.gut-brain,.solution-grid,.pubs,.product-hero,.journey-track,.pilot-stats,.trial-grid,.skus,.awards-grid,.strat-grid,.market-grid,.rm-stages,.team-grid,.ask-grid{grid-template-columns:1fr !important}
+  h1.headline{font-size:38px}
+  .bigstat{font-size:140px}
+  .gb-arrow{transform:rotate(90deg)}
+  .journey-track::before{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="kbd-hint" id="hint">Use <kbd>↓</kbd><kbd>↑</kbd> or scroll · <kbd>F</kbd> Fullscreen</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1: COVER -->
+  <section class="slide cover">
+    <div class="cover-grid">
+      <div class="cover-left">
+        <div class="brand reveal">
+          <div>
+            <div class="brand-name">One<span>Carbon</span></div>
+            <div class="brand-sub">Cambridge · Founded 2024</div>
+          </div>
+        </div>
+        <div class="cover-title">
+          <h1 class="reveal reveal-d1">Targeted probiotic <span class="accent">solutions.</span></h1>
+          <p class="reveal reveal-d2">Probiotics, evolved for brain health. Built on Cambridge science, designed for real life.</p>
+        </div>
+        <div class="cover-meta reveal reveal-d3">
+          <div class="name">Investor deck · 2025</div>
+          <div>One Carbon Technologies — trading name of Healthspan Biotics Ltd</div>
+          <a href="https://onecarbon.com">onecarbon.com</a>
+          <a href="mailto:yizhou@onecarbon.com">yizhou@onecarbon.com</a>
+        </div>
+      </div>
+      <div class="cover-right">
+        <div class="cover-art">
+          <svg viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+            <defs>
+              <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".25"/>
+                <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="300" cy="400" r="320" fill="url(#halo)"/>
+            <!-- Particle dots forming a "1C" suggestion -->
+            <g fill="#E2E9F4" opacity="0.75">
+              <!-- Number 1 column -->
+              <circle cx="240" cy="220" r="3"/>
+              <circle cx="248" cy="260" r="4"/>
+              <circle cx="252" cy="300" r="3"/>
+              <circle cx="258" cy="340" r="4"/>
+              <circle cx="262" cy="380" r="4"/>
+              <circle cx="266" cy="420" r="5"/>
+              <circle cx="270" cy="460" r="4"/>
+              <circle cx="272" cy="500" r="4"/>
+              <circle cx="270" cy="540" r="3"/>
+              <circle cx="266" cy="580" r="3"/>
+              <!-- C curve -->
+              <circle cx="380" cy="250" r="3"/>
+              <circle cx="360" cy="260" r="4"/>
+              <circle cx="340" cy="280" r="4"/>
+              <circle cx="328" cy="310" r="5"/>
+              <circle cx="322" cy="345" r="4"/>
+              <circle cx="320" cy="385" r="4"/>
+              <circle cx="320" cy="425" r="4"/>
+              <circle cx="322" cy="465" r="5"/>
+              <circle cx="328" cy="500" r="4"/>
+              <circle cx="340" cy="530" r="4"/>
+              <circle cx="360" cy="550" r="4"/>
+              <circle cx="380" cy="560" r="3"/>
+            </g>
+            <!-- Floating ambient dots -->
+            <g fill="#FFFFFF" opacity="0.35">
+              <circle cx="120" cy="180" r="2"/>
+              <circle cx="500" cy="220" r="2"/>
+              <circle cx="80" cy="500" r="2"/>
+              <circle cx="520" cy="600" r="2"/>
+              <circle cx="100" cy="700" r="2"/>
+              <circle cx="480" cy="120" r="2"/>
+              <circle cx="160" cy="380" r="2"/>
+              <circle cx="440" cy="440" r="2"/>
+            </g>
+            <!-- Orbital ring -->
+            <circle cx="300" cy="400" r="260" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.15"/>
+            <circle cx="300" cy="400" r="200" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.2"/>
+          </svg>
+        </div>
+        <div class="cover-tag">
+          <span>1C-01 · Evolved probiotic</span>
+          <span>PROFILE Phase I — NCT07457242</span>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">01 / 17</div>
+  </section>
+
+  <!-- 2: PROBLEM -->
+  <section class="slide problem">
+    <div class="frame-mark reveal"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div>
+      <div class="eyebrow reveal">The problem</div>
+      <h1 class="headline reveal reveal-d1">Alzheimer's is humanity's largest health challenge — and a <em>solvable</em> one.</h1>
+      <p class="subhead reveal reveal-d2">Existing therapies are expensive (£25K/yr), only delay symptoms, and carry severe side effects. The market is desperate for a safe, early-intervention solution.</p>
+
+      <div class="stats-row reveal reveal-d3">
+        <div class="stat-item">
+          <div class="n"><em>£25K</em> / yr</div>
+          <div class="l">Existing therapy price</div>
+        </div>
+        <div class="stat-item">
+          <div class="n">Late <em>stage</em></div>
+          <div class="l">Pathology already irreversible</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="bigstat reveal reveal-d2"><span class="counter" data-target="42">0</span><span class="pct">%</span></div>
+      <div class="tag reveal reveal-d3" style="margin-top:1em;">Lifetime risk of dementia</div>
+    </div>
+    <div class="frame-num">02 / 17</div>
+    <div class="frame-foot">Source: Fang et al., 2025 · PMID 39806070</div>
+  </section>
+
+  <!-- 3: INSIGHT (gut-brain) -->
+  <section class="slide insight">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">The insight</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;">The brain protects itself through the <em>one-carbon</em> pathway — and the gut can support it.</h1>
+    <p class="subhead reveal reveal-d2">Your gut and brain talk constantly through the gut-brain axis. Specific bacteria produce the metabolites neurons need to stay healthy. Standard supplements can't replace what the right bacteria produce — but the right probiotic can.</p>
+
+    <div class="gut-brain">
+      <div class="gb-card reveal reveal-d3">
+        <div class="icon">
+          <svg viewBox="0 0 42 42"><path d="M12 8 Q21 4 30 8 L30 26 Q21 32 12 26 Z"/><path d="M12 17 L30 17"/></svg>
+        </div>
+        <h3>Gut bacteria</h3>
+        <p>Produce one-carbon metabolites the brain needs</p>
+      </div>
+      <div class="gb-arrow reveal reveal-d4">→</div>
+      <div class="gb-card reveal reveal-d4">
+        <div class="icon">
+          <svg viewBox="0 0 42 42"><circle cx="21" cy="21" r="6"/><circle cx="12" cy="12" r="3"/><circle cx="30" cy="12" r="3"/><circle cx="12" cy="30" r="3"/><circle cx="30" cy="30" r="3"/><line x1="12" y1="12" x2="21" y2="21"/><line x1="30" y1="12" x2="21" y2="21"/><line x1="12" y1="30" x2="21" y2="21"/><line x1="30" y1="30" x2="21" y2="21"/></svg>
+        </div>
+        <h3>Bloodstream</h3>
+        <p>Metabolites travel from gut into the bloodstream</p>
+      </div>
+      <div class="gb-arrow reveal reveal-d5">→</div>
+      <div class="gb-card reveal reveal-d5">
+        <div class="icon">
+          <svg viewBox="0 0 42 42"><path d="M10 26 Q10 12 21 12 Q32 12 32 26 Q32 32 28 33 L14 33 Q10 32 10 26 Z"/><line x1="21" y1="33" x2="21" y2="37"/></svg>
+        </div>
+        <h3>Brain resilience</h3>
+        <p>Supports the pathways neurons rely on</p>
+      </div>
+    </div>
+    <div class="frame-num">03 / 17</div>
+  </section>
+
+  <!-- 4: SOLUTION (split slide) -->
+  <section class="slide solution">
+    <div class="solution-grid">
+      <div class="solution-left">
+        <div class="eyebrow reveal">Our solution</div>
+        <h1 class="reveal reveal-d1">A bacteria that <em>already lives in your gut</em> — we just made it work harder for your brain.</h1>
+        <p class="reveal reveal-d2">A naturally occurring gut strain, evolved in our Cambridge lab to produce the exact one-carbon molecules your neurons need.</p>
+      </div>
+      <div class="solution-right">
+        <div class="eyebrow reveal reveal-d3">1C-01</div>
+        <h2 style="font-size:42px;font-weight:500;margin:0.4em 0 1em;letter-spacing:-0.015em;" class="reveal reveal-d3">Evolved probiotic. Food-grade.<br><em style="color:var(--accent);font-style:italic;">Not a drug.</em></h2>
+        <div class="solution-features">
+          <div class="sf-item reveal reveal-d4">
+            <div class="sf-num">i.</div>
+            <div class="sf-content">
+              <h4>Directed-evolution strain</h4>
+              <p>Selected for one-carbon metabolite output over a year of optimisation</p>
+            </div>
+          </div>
+          <div class="sf-item reveal reveal-d5">
+            <div class="sf-num">ii.</div>
+            <div class="sf-content">
+              <h4>Food-grade, non-GMO</h4>
+              <p>Safe to take alongside existing medication and supplements</p>
+            </div>
+          </div>
+          <div class="sf-item reveal reveal-d6">
+            <div class="sf-num">iii.</div>
+            <div class="sf-content">
+              <h4>One capsule daily</h4>
+              <p>No injection, no clinic visit, no cold chain</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">04 / 17</div>
+  </section>
+
+  <!-- 5: SCIENCE (publications) -->
+  <section class="slide science">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">The science</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;font-size:clamp(34px,4vw,56px);">Built on <em>5 Cambridge studies</em> — peer-reviewed and replicated.</h1>
+    <p class="subhead reveal reveal-d2">Our team developed novel machine-learning methods that integrate genomics, metabolomics, proteomics and single-cell transcriptomics — to discover a pathway critical to cellular resilience in Alzheimer's.</p>
+
+    <div class="pubs">
+      <div class="pub reveal reveal-d3">
+        <div class="pub-tag">Cell Death &amp; Disease · 2024</div>
+        <div class="pub-title">Mitochondrial one-carbon metabolism in Alzheimer's models</div>
+        <div class="pub-meta">Yu, Y., et al. — discovery of the cellular resilience pathway.</div>
+        <div class="pub-id">PMID 39582067</div>
+      </div>
+      <div class="pub reveal reveal-d4">
+        <div class="pub-tag">Cell Death &amp; Disease · 2021</div>
+        <div class="pub-title">Pathway is neuroprotective in primary neurons</div>
+        <div class="pub-meta">Yu, Y., et al. — first mechanistic validation in human neurons.</div>
+        <div class="pub-id">PMID 34172715</div>
+      </div>
+      <div class="pub reveal reveal-d5">
+        <div class="pub-tag">Cell Death &amp; Disease · 2025</div>
+        <div class="pub-title">Translational mechanism &amp; metabolic regulation</div>
+        <div class="pub-meta">Yu &amp; Martins, et al. — pathway in vivo, validated at scale.</div>
+        <div class="pub-id">PMID 38928008</div>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="ss-item reveal reveal-d3">
+        <div class="n"><span class="counter" data-target="5">0</span></div>
+        <div class="l">Peer-reviewed Cambridge studies</div>
+      </div>
+      <div class="ss-item reveal reveal-d4">
+        <div class="n">+<span class="counter" data-target="83">0</span><em>%</em></div>
+        <div class="l">Mitochondrial function uplift in animal models</div>
+      </div>
+      <div class="ss-item reveal reveal-d5">
+        <div class="n">N=<span class="counter" data-target="15">0</span></div>
+        <div class="l">Pilot study participants (aged 50–65)</div>
+      </div>
+      <div class="ss-item reveal reveal-d6">
+        <div class="n"><span class="counter" data-target="500">0</span>K+</div>
+        <div class="l">Human cohort cross-validation</div>
+      </div>
+    </div>
+    <div class="frame-num">05 / 17</div>
+  </section>
+
+  <!-- 6: PRODUCT (1C-01) -->
+  <section class="slide product-slide surface">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">The product</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;font-size:clamp(36px,4.2vw,58px);"><em>1C-01</em> — a precision probiotic, in a daily capsule.</h1>
+
+    <div class="product-hero">
+      <div class="product-img-wrap reveal reveal-d2">
+        <img src="https://onecarbon.com/media/hand-with-pill.png" alt="1C-01 capsule" onerror="this.style.display='none'">
+      </div>
+      <div class="product-features">
+        <div class="pf-item reveal reveal-d3">
+          <span class="pf-pill">Format</span>
+          <div class="pf-text"><b>Food-grade capsule</b> — one per day, taken with water in the morning.</div>
+        </div>
+        <div class="pf-item reveal reveal-d4">
+          <span class="pf-pill">Mechanism</span>
+          <div class="pf-text"><b>Live evolved strain</b> establishes in the gut and produces one-carbon metabolites.</div>
+        </div>
+        <div class="pf-item reveal reveal-d5">
+          <span class="pf-pill">Safety</span>
+          <div class="pf-text"><b>Non-GMO, drug-free</b> — safe alongside existing medication and supplements.</div>
+        </div>
+        <div class="pf-item reveal reveal-d6">
+          <span class="pf-pill">Onboarding</span>
+          <div class="pf-text"><b>Personalised assessment</b> — 7-question screener to identify candidate users.</div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">06 / 17</div>
+  </section>
+
+  <!-- 7: HOW IT WORKS (journey) -->
+  <section class="slide journey">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">How it works</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;">From <em>capsule</em> to <em>brain resilience</em> — a four-step biological journey.</h1>
+
+    <div class="journey-track">
+      <div class="jt-step reveal reveal-d2">
+        <div class="jt-dot">1</div>
+        <h4>You take 1C-01</h4>
+        <p>One food-grade capsule daily — designed for long-term consistency, no cold chain, no clinic visit.</p>
+      </div>
+      <div class="jt-step reveal reveal-d3">
+        <div class="jt-dot">2</div>
+        <h4>Bacteria establish</h4>
+        <p>The capsule reaches your gut, where the evolved strain begins establishing in the microbiome.</p>
+      </div>
+      <div class="jt-step reveal reveal-d4">
+        <div class="jt-dot">3</div>
+        <h4>Metabolites produced</h4>
+        <p>The evolved strain produces one-carbon molecules your neurons need — and they enter the bloodstream.</p>
+      </div>
+      <div class="jt-step reveal reveal-d5">
+        <div class="jt-dot">4</div>
+        <h4>Brain resilience</h4>
+        <p>Over weeks, the pathway is supported. Most users notice meaningful changes by weeks 4–8.</p>
+      </div>
+    </div>
+    <div class="frame-num">07 / 17</div>
+  </section>
+
+  <!-- 8: PILOT DATA -->
+  <section class="slide pilot">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Validation</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;">Preclinical + pilot data — <em>real signal</em>, real users.</h1>
+    <p class="subhead reveal reveal-d2">Five years of Cambridge science, three independent papers, animal-model validation, and a first-in-human pilot with healthy adults aged 50–65.</p>
+
+    <div class="pilot-stats">
+      <div class="ps-card reveal reveal-d3">
+        <div class="ps-big">+<span class="counter" data-target="83">0</span><em>%</em></div>
+        <div class="ps-l">Mitochondrial function uplift in Alzheimer's animal models — the core efficacy signal.</div>
+        <div class="ps-cite">Yu et al., 2024 · PMID 39582067</div>
+      </div>
+      <div class="ps-card reveal reveal-d4">
+        <div class="ps-big"><span class="counter" data-target="0">0</span><em>%</em></div>
+        <div class="ps-l">Adverse events reported in our Cambridge pilot — a food-grade safety profile.</div>
+        <div class="ps-cite">N=15 · 50–65 yrs · pilot study</div>
+      </div>
+      <div class="ps-card reveal reveal-d5">
+        <div class="ps-big"><span class="counter" data-target="100">0</span><em>%</em></div>
+        <div class="ps-l">Pilot retention — strong product-market fit signal from early users.</div>
+        <div class="ps-cite">12-week follow-up · 100% completion</div>
+      </div>
+    </div>
+    <div class="frame-num">08 / 17</div>
+    <div class="frame-foot">1C-01 is a dietary supplement. Not MHRA-approved to diagnose, treat or prevent disease.</div>
+  </section>
+
+  <!-- 9: PROFILE TRIAL (split) -->
+  <section class="slide trial">
+    <div class="trial-grid">
+      <div class="trial-left">
+        <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+        <div class="eyebrow reveal">Clinical strategy</div>
+        <h1 class="headline reveal reveal-d1" style="font-size:clamp(36px,4.2vw,60px);"><em>PROFILE</em> — our Phase I clinical trial is registered.</h1>
+        <p class="subhead reveal reveal-d2" style="margin-top:1em;">Validating 1C-01 in adults with cognitive concerns. The trial pairs the probiotic with personalised biomarker monitoring — and produces the human data that builds the clinical asset.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2vw;margin-top:4vh;">
+          <div class="reveal reveal-d3">
+            <div class="tag" style="margin-bottom:6px;">Registration</div>
+            <div style="font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;">NCT07457242</div>
+          </div>
+          <div class="reveal reveal-d4">
+            <div class="tag" style="margin-bottom:6px;">Trial site</div>
+            <div style="font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;">Cambridge CTU</div>
+          </div>
+          <div class="reveal reveal-d5">
+            <div class="tag" style="margin-bottom:6px;">Endpoints</div>
+            <div style="font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;">Safety + biomarkers</div>
+          </div>
+          <div class="reveal reveal-d6">
+            <div class="tag" style="margin-bottom:6px;">Use of data</div>
+            <div style="font-family:var(--serif);font-size:18px;color:var(--text);font-weight:600;">IND/CTA readiness</div>
+          </div>
+        </div>
+      </div>
+      <div class="trial-right">
+        <div class="trial-id reveal reveal-d2">PROFILE · Phase I</div>
+        <div class="trial-num reveal reveal-d2">Ph<em>I</em></div>
+        <div class="trial-label reveal reveal-d3">Registered, sign-up live, and recruiting through the OneCarbon community.</div>
+        <div class="reveal reveal-d4" style="margin-top:3vh;font-family:var(--serif);font-size:11px;letter-spacing:0.18em;color:rgba(255,255,255,0.6);text-transform:uppercase;font-weight:600;">→ apply at onecarbon.com</div>
+      </div>
+    </div>
+    <div class="frame-num">09 / 17</div>
+  </section>
+
+  <!-- 10: COMMERCE -->
+  <section class="slide commerce tint">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Commercial — live today</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;font-size:clamp(36px,4.2vw,58px);">Four SKUs <em>live</em> on onecarbon.com — direct, recurring, and validated.</h1>
+
+    <div class="skus">
+      <div class="sku reveal reveal-d2">
+        <span class="sku-tag">K03 · Trial</span>
+        <h4>30 pills</h4>
+        <div class="sku-price"><em>£30</em></div>
+        <p class="sku-desc">1-month supply — the entry SKU for new users.</p>
+      </div>
+      <div class="sku reveal reveal-d3">
+        <span class="sku-tag">K02 · Core</span>
+        <h4>120 pills</h4>
+        <div class="sku-price"><em>£100</em></div>
+        <p class="sku-desc">4-month supply — the most popular subscription tier.</p>
+      </div>
+      <div class="sku reveal reveal-d4">
+        <span class="sku-tag">K01 · Annual</span>
+        <h4>360 pills</h4>
+        <div class="sku-price"><em>£250</em></div>
+        <p class="sku-desc">Year's supply — committed users on long-term routines.</p>
+      </div>
+      <div class="sku featured reveal reveal-d5">
+        <span class="sku-tag">K00 · Premium</span>
+        <h4>Bundle</h4>
+        <div class="sku-price"><em>£499</em></div>
+        <p class="sku-desc">3-month supply + biomarker testing — clinical-grade tier.</p>
+      </div>
+    </div>
+
+    <div class="commerce-foot">
+      <div>
+        <div class="label">Stripe checkout</div>
+        <div class="value"><em>Live</em></div>
+      </div>
+      <div>
+        <div class="label">Geo-currency</div>
+        <div class="value">5 markets</div>
+      </div>
+      <div>
+        <div class="label">Distribution</div>
+        <div class="value">D2C subscription</div>
+      </div>
+      <div>
+        <div class="label">Margin profile</div>
+        <div class="value">Food-grade scale</div>
+      </div>
+    </div>
+    <div class="frame-num">10 / 17</div>
+    <div class="frame-foot">Pricing live at onecarbon.com/purchase.html</div>
+  </section>
+
+  <!-- 11: RECOGNITION -->
+  <section class="slide recognition">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Recognition</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;font-size:clamp(36px,4.2vw,58px);">Independently validated by the world's <em>most selective</em> award programmes.</h1>
+
+    <div class="awards-grid">
+      <div class="aw-card reveal reveal-d2">
+        <img src="https://onecarbon.com/media/logo-falling-walls.png" alt="Falling Walls" onerror="this.style.display='none'">
+        <div class="aw-title">Falling Walls</div>
+        <div class="aw-desc">2nd of 100 at global Lab finale (2023)</div>
+      </div>
+      <div class="aw-card reveal reveal-d3">
+        <img src="https://onecarbon.com/media/logo-forbes.png" alt="Forbes" onerror="this.style.display='none'">
+        <div class="aw-title">Forbes</div>
+        <div class="aw-desc">30 Under 30 — Science recognition</div>
+      </div>
+      <div class="aw-card reveal reveal-d4">
+        <img src="https://onecarbon.com/media/logo-trinbrad.png" alt="Trinity Bradfield" onerror="this.style.display='none'">
+        <div class="aw-title">Trinity Bradfield</div>
+        <div class="aw-desc">Cambridge prize winner (2024)</div>
+      </div>
+      <div class="aw-card reveal reveal-d5">
+        <img src="https://onecarbon.com/media/logo-launchpad.png" alt="Alzheimer's Society Innovation Launchpad" onerror="this.style.display='none'">
+        <div class="aw-title">Alzheimer's Society</div>
+        <div class="aw-desc">Innovation Launchpad cohort (2025)</div>
+      </div>
+    </div>
+    <div class="frame-num">11 / 17</div>
+  </section>
+
+  <!-- 12: STRATEGY (commercial + clinical) -->
+  <section class="slide strategy">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Strategy</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1300px;font-size:clamp(36px,4vw,56px);">A <em>dual-path</em> playbook — supplement revenue funds clinical validation.</h1>
+
+    <div class="strat-grid">
+      <div class="strat-card reveal reveal-d2">
+        <span class="strat-tag">Path A · Commercial</span>
+        <h3>Revenue + real-world data</h3>
+        <p class="strat-lead">A premium, science-driven consumer product. Builds brand, generates cash flow, feeds human data into the trial.</p>
+        <ul>
+          <li>D2C subscription from day one</li>
+          <li>£30 → £499 SKU ladder live on Stripe</li>
+          <li>Rapid learning loops with real users</li>
+        </ul>
+      </div>
+      <div class="strat-card featured reveal reveal-d3">
+        <span class="strat-tag">Path B · Clinical</span>
+        <h3>PROFILE Phase I + IP moat</h3>
+        <p class="strat-lead">Regulated clinical track that creates a high-value asset pharma partners will pay for.</p>
+        <ul>
+          <li>NCT07457242 registered, recruiting now</li>
+          <li>Human biomarker package + IP filed</li>
+          <li>IND/CTA-ready inside 36 months</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:4vh;padding:2.4vh 2.6vw;background:var(--ink);color:var(--surface);border-radius:var(--rm);display:flex;gap:2vw;align-items:center;" class="reveal reveal-d4">
+      <div style="font-family:var(--serif);font-size:10px;letter-spacing:0.25em;color:var(--accent-soft);text-transform:uppercase;font-weight:600;flex-shrink:0;">↳ Integration</div>
+      <div style="font-family:var(--sans);font-size:17px;color:rgba(255,255,255,0.92);line-height:1.5;">Commercial users power trial recruitment and human-data generation — de-risking the clinical asset and multiplying exit value.</div>
+    </div>
+    <div class="frame-num">12 / 17</div>
+  </section>
+
+  <!-- 13: MARKET -->
+  <section class="slide market-slide surface">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Market</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1300px;font-size:clamp(36px,4.2vw,58px);">A <em>$100B+</em> market by 2030 — and we're early in a new category.</h1>
+
+    <div class="market-grid">
+      <div class="market-chart reveal reveal-d2">
+        <canvas id="marketChart"></canvas>
+      </div>
+      <div class="market-points">
+        <div class="mp-item reveal reveal-d2">
+          <div class="mp-l">Total addressable market</div>
+          <div class="mp-n">$<em>100B+</em></div>
+          <div class="mp-d">Global Alzheimer's therapeutics market by 2030.</div>
+        </div>
+        <div class="mp-item reveal reveal-d3">
+          <div class="mp-l">Pre-diagnostic TAM</div>
+          <div class="mp-n">$<em>40B</em></div>
+          <div class="mp-d">Adults 50+ concerned about cognitive decline — our prevention-stage segment.</div>
+        </div>
+        <div class="mp-item reveal reveal-d4">
+          <div class="mp-l">Beachhead</div>
+          <div class="mp-n">UK <em>·</em> US</div>
+          <div class="mp-d">English-speaking direct markets first, with EU/AU/CN approvals to follow.</div>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">13 / 17</div>
+  </section>
+
+  <!-- 14: ROADMAP -->
+  <section class="slide roadmap">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Roadmap</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1300px;font-size:clamp(36px,4.2vw,58px);">From <em>discovery</em> to <em>commercial</em> — every step already laid.</h1>
+
+    <div class="rm-track">
+      <div class="rm-line"></div>
+      <div class="rm-stages">
+        <div class="rm-stage reveal reveal-d2">
+          <div class="dot"></div>
+          <div class="yr">2019 — 2022</div>
+          <h4>Research begins</h4>
+          <ul>
+            <li>Cambridge PhD work</li>
+            <li>Pathway discovered</li>
+          </ul>
+        </div>
+        <div class="rm-stage reveal reveal-d3">
+          <div class="dot"></div>
+          <div class="yr">2023</div>
+          <h4>Global recognition</h4>
+          <ul>
+            <li>Falling Walls 2nd of 100</li>
+            <li>CSAR Student Award</li>
+          </ul>
+        </div>
+        <div class="rm-stage reveal reveal-d4">
+          <div class="dot"></div>
+          <div class="yr">2024</div>
+          <h4>1C-01 built</h4>
+          <ul>
+            <li>Directed-evolution strain</li>
+            <li>First-in-human testing</li>
+            <li>Trinity Bradfield prize</li>
+          </ul>
+        </div>
+        <div class="rm-stage reveal reveal-d5">
+          <div class="dot"></div>
+          <div class="yr">2025</div>
+          <h4>MVP launched</h4>
+          <ul>
+            <li>Pilot group live</li>
+            <li>Alz. Society Launchpad</li>
+            <li>PROFILE registered</li>
+          </ul>
+        </div>
+        <div class="rm-stage reveal reveal-d6">
+          <div class="dot"></div>
+          <div class="yr">2026 — 2028</div>
+          <h4>Scale + validate</h4>
+          <ul>
+            <li>PROFILE readout</li>
+            <li>D2C scale-up</li>
+            <li>IND/CTA prep</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">14 / 17</div>
+  </section>
+
+  <!-- 15: TEAM -->
+  <section class="slide team-slide">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Team</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1200px;font-size:clamp(36px,4.2vw,56px);">Science, clinic, and execution — built by a <em>Cambridge-anchored</em> team.</h1>
+
+    <div class="team-grid">
+      <div class="tm-card reveal reveal-d2">
+        <div class="tm-avatar"><img src="https://onecarbon.com/media/YizhouYu.jpg" alt="Dr Yizhou Yu"></div>
+        <h4>Dr Yizhou Yu</h4>
+        <div class="role">Co-Founder · CEO</div>
+        <p class="bio">Award-winning neuroscientist &amp; computational biologist. 15+ publications. 8 years in neurodegeneration research.</p>
+      </div>
+      <div class="tm-card reveal reveal-d3">
+        <div class="tm-avatar"><img src="https://onecarbon.com/media/laura.jpeg" alt="Laura Galbraith"></div>
+        <h4>Laura Galbraith</h4>
+        <div class="role">Co-Founder</div>
+        <p class="bio">First-class Oxford (Human Sciences). Biotech start-ups (iPSC) + investment banking. Motivated by family history of AD.</p>
+      </div>
+      <div class="tm-card reveal reveal-d4">
+        <div class="tm-avatar"><img src="https://onecarbon.com/media/jake.jpeg" alt="Jake McMillan"></div>
+        <h4>Jake McMillan</h4>
+        <div class="role">Co-Founder</div>
+        <p class="bio">First-class Oxford (PPE). Founded a government-contract operations company. Financial-sector operational experience.</p>
+      </div>
+      <div class="tm-card reveal reveal-d5">
+        <div class="tm-avatar"><img src="https://onecarbon.com/media/suleymannoordeen.jpeg" alt="Suleyman Noordeen"></div>
+        <h4>Suleyman Noordeen</h4>
+        <div class="role">Medical Lead</div>
+        <p class="bio">Student doctor with multi-year clinical research experience. Recognised for translating complex science to wide audiences.</p>
+      </div>
+    </div>
+
+    <div class="advisor-row">
+      <div class="av-label">Chair</div>
+      <div class="advisor-card reveal reveal-d6">
+        <div class="ac-avatar"><img src="https://onecarbon.com/media/SimonGalbraith.jpeg" alt="Dr Simon Galbraith"></div>
+        <div>
+          <h4>Dr Simon Galbraith</h4>
+          <div class="role">Chair</div>
+          <p class="bio">Previously CEO and co-founder of Redgate Software (20+ years). Chair at RoboK. Founder/CEO of Cade Hill. Board member across software and biotech.</p>
+        </div>
+      </div>
+    </div>
+    <div class="frame-num">15 / 17</div>
+  </section>
+
+  <!-- 16: COMPETITIVE POSITIONING -->
+  <section class="slide strategy" style="background:var(--bg);">
+    <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
+    <div class="eyebrow reveal">Why now</div>
+    <h1 class="headline reveal reveal-d1" style="max-width:1300px;font-size:clamp(36px,4.2vw,58px);">A new category — and we are <em>alone</em> in it.</h1>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;margin-top:5vh;">
+      <div class="strat-card reveal reveal-d2">
+        <span class="strat-tag" style="background:#888;">vs Supplements</span>
+        <h3>Backed by science</h3>
+        <p class="strat-lead">Existing brain-health supplements are safe but lack any clinical or mechanistic backing.</p>
+        <ul>
+          <li>5 peer-reviewed Cambridge papers</li>
+          <li>Defined mechanism of action</li>
+          <li>Phase I trial registered</li>
+        </ul>
+      </div>
+      <div class="strat-card reveal reveal-d3" style="border-color:var(--accent);">
+        <span class="strat-tag" style="background:var(--accent);">vs Monoclonals</span>
+        <h3>Safe &amp; affordable</h3>
+        <p class="strat-lead">Anti-Aβ antibodies cost £25K/yr and risk brain swelling. We're a daily capsule.</p>
+        <ul>
+          <li>25× cheaper than monoclonals</li>
+          <li>No infusions, no clinic visits</li>
+          <li>Zero adverse events in pilot</li>
+        </ul>
+      </div>
+      <div class="strat-card reveal reveal-d4">
+        <span class="strat-tag" style="background:var(--accent-dark);">vs Drug pipeline</span>
+        <h3>Live revenue, today</h3>
+        <p class="strat-lead">Other AD candidates are 5–10 years from market. We're shipping product now.</p>
+        <ul>
+          <li>4 SKUs live on Stripe</li>
+          <li>Real users, real data</li>
+          <li>Capital-efficient runway</li>
+        </ul>
+      </div>
+    </div>
+    <div class="frame-num">16 / 17</div>
+  </section>
+
+  <!-- 17: THE ASK -->
+  <section class="slide ask">
+    <div class="ask-grid">
+      <div class="ask-left">
+        <div class="brand reveal" style="margin-bottom:0;">
+          <div style="font-family:var(--serif);font-weight:700;font-size:22px;color:var(--surface);letter-spacing:-0.01em;">One<span style="color:var(--accent-soft);">Carbon</span></div>
+        </div>
+        <div>
+          <div class="eyebrow reveal reveal-d1" style="color:var(--accent-soft);">The ask · build with us</div>
+          <h1 class="reveal reveal-d2">Safe · effective · affordable<br><em>brain-health</em> care for everyone.</h1>
+          <div class="use-of-funds">
+            <div class="uof-item reveal reveal-d3">
+              <div class="uof-pct">40%</div>
+              <div class="uof-label">PROFILE Phase I — recruitment, dosing, biomarker analysis</div>
+              <div class="uof-amt">£320K</div>
+            </div>
+            <div class="uof-item reveal reveal-d4">
+              <div class="uof-pct">25%</div>
+              <div class="uof-label">Manufacturing scale-up &amp; supply chain</div>
+              <div class="uof-amt">£200K</div>
+            </div>
+            <div class="uof-item reveal reveal-d5">
+              <div class="uof-pct">25%</div>
+              <div class="uof-label">D2C commercial — performance marketing &amp; retention</div>
+              <div class="uof-amt">£200K</div>
+            </div>
+            <div class="uof-item reveal reveal-d6" style="border-bottom:0;">
+              <div class="uof-pct">10%</div>
+              <div class="uof-label">IND/CTA prep &amp; regulatory readiness</div>
+              <div class="uof-amt">£80K</div>
+            </div>
+          </div>
+        </div>
+        <div class="ask-contact reveal reveal-d6">
+          <a href="mailto:yizhou@onecarbon.com">yizhou@onecarbon.com</a>
+          <a href="https://onecarbon.com">onecarbon.com</a>
+          <span>Dr Yizhou Yu · CEO &amp; Co-Founder</span>
+        </div>
+      </div>
+      <div class="ask-right">
+        <div class="ask-cap reveal">Currently raising</div>
+        <div class="ask-amount reveal reveal-d2"><span class="pre">£</span><span class="counter" data-target="800">0</span><span class="post">K</span></div>
+        <div class="ask-desc reveal reveal-d3">Foundation round — fund PROFILE Phase I + scale commercial + IND/CTA readiness.</div>
+      </div>
+    </div>
+    <div class="frame-num" style="color:rgba(255,255,255,0.5);">17 / 17</div>
+  </section>
+
+</div>
+
+<script>
+const revealEls = document.querySelectorAll('.reveal');
+const slideEls = document.querySelectorAll('.slide');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      const counters = e.target.querySelectorAll('.counter');
+      counters.forEach(c => { if (!c.dataset.animated) animateCounter(c); });
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+const slideIo = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const counters = e.target.querySelectorAll('.counter');
+      counters.forEach(c => { if (!c.dataset.animated) animateCounter(c); });
+    }
+  });
+}, { threshold: 0.4 });
+slideEls.forEach(s => slideIo.observe(s));
+
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target || '0');
+  el.dataset.animated = '1';
+  const dur = 1400;
+  const start = performance.now();
+  const isInt = target % 1 === 0;
+  function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const v = target * eased;
+    el.textContent = isInt ? Math.round(v) : v.toFixed(1);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = isInt ? target : target.toFixed(1);
+  }
+  requestAnimationFrame(step);
+}
+
+const deck = document.getElementById('deck');
+let currentSlide = 0;
+const slides = Array.from(slideEls);
+document.addEventListener('keydown', (e) => {
+  const prevent = ['ArrowDown','ArrowUp','PageDown','PageUp','Space',' ','f','F'];
+  if (prevent.includes(e.key)) e.preventDefault();
+  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Space') {
+    currentSlide = Math.min(currentSlide + 1, slides.length - 1);
+    slides[currentSlide].scrollIntoView({behavior:'smooth'});
+  }
+  if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    currentSlide = Math.max(currentSlide - 1, 0);
+    slides[currentSlide].scrollIntoView({behavior:'smooth'});
+  }
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+  if (e.key === 'Home') { currentSlide = 0; slides[0].scrollIntoView({behavior:'smooth'}); }
+  if (e.key === 'End') { currentSlide = slides.length-1; slides[currentSlide].scrollIntoView({behavior:'smooth'}); }
+});
+deck.addEventListener('scroll', () => {
+  const scrollY = deck.scrollTop;
+  let bestIdx = 0, bestDist = Infinity;
+  slides.forEach((s, i) => {
+    const dist = Math.abs(s.offsetTop - scrollY);
+    if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+  });
+  currentSlide = bestIdx;
+  const pct = (currentSlide / (slides.length - 1)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+setTimeout(() => document.getElementById('hint').classList.add('fade'), 5500);
+
+// Market chart
+function makeMarketChart() {
+  const ctx = document.getElementById('marketChart');
+  if (!ctx || typeof Chart === 'undefined') return;
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2023','2025','2027','2030'],
+      datasets: [{
+        label: 'Global Alzheimer\'s market ($B)',
+        data: [38, 56, 78, 105],
+        borderColor: '#456BB7',
+        backgroundColor: (ctx) => {
+          const g = ctx.chart.ctx.createLinearGradient(0,0,0,400);
+          g.addColorStop(0, 'rgba(69,107,183,0.35)');
+          g.addColorStop(1, 'rgba(69,107,183,0)');
+          return g;
+        },
+        fill: true,
+        borderWidth: 3,
+        tension: 0.42,
+        pointBackgroundColor: '#456BB7',
+        pointBorderColor: '#FFFFFF',
+        pointBorderWidth: 3,
+        pointRadius: [6,7,8,12],
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 1800, easing: 'easeOutCubic' },
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: 'Global Alzheimer\'s therapeutics market ($B)', font: { size: 12, family:'DM Sans', weight:'500' }, padding: { bottom: 20 }, color:'#456BB7' },
+        tooltip: { backgroundColor: '#0E1521', padding: 12, titleFont:{size:13}, bodyFont:{size:12}, callbacks: { label: (c) => `$${c.raw}B` } }
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#EAE2D1' }, ticks: { font:{size:11, family:'Outfit'}, callback: (v) => `$${v}B` } },
+        x: { grid: { display: false }, ticks: { font:{size:11, family:'Outfit'} } }
+      }
+    }
+  });
+}
+window.addEventListener('load', () => setTimeout(makeMarketChart, 200));
+</script>
+</body>
+</html>
