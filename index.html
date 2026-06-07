@@ -422,7 +422,6 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
     </div>
 
     <div class="frame-num">02 / 14</div>
-    <div class="frame-foot">Source: AD International (2024); WHO Global Burden of Disease</div>
   </section>
 
   <!-- 3: THREE-STEP FRAMEWORK -->
@@ -896,15 +895,54 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
 
     </div>
 
-    <div class="reveal reveal-d4" style="margin-top:3vh;padding-top:2vh;border-top:1px solid var(--border);display:flex;gap:4vw;align-items:center;">
-      <div style="font-family:var(--sans);font-size:12px;color:var(--text-faint);">Pricing</div>
-      <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text);">£1,000/yr · capsule + biomarker tracking</div>
-      <div style="width:1px;height:18px;background:var(--border);"></div>
-      <div style="font-family:var(--sans);font-size:12px;color:var(--text-faint);">Model</div>
-      <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text);">Recurring subscription</div>
-      <div style="width:1px;height:18px;background:var(--border);"></div>
-      <div style="font-family:var(--sans);font-size:12px;color:var(--text-faint);">Launch</div>
-      <div style="font-family:var(--serif);font-size:15px;font-weight:600;color:var(--text);">Post PROFILE readout · 2027</div>
+    <!-- Buyer personas -->
+    <div class="reveal reveal-d4" style="margin-top:2.5vh;padding-top:2vh;border-top:1px solid var(--border);">
+      <div style="font-family:var(--serif);font-size:10px;letter-spacing:0.16em;color:var(--accent);text-transform:uppercase;font-weight:700;margin-bottom:1.5vh;">Buyer personas · hover to explore</div>
+      <div style="display:flex;gap:1.5vw;">
+
+        <!-- Persona 1 -->
+        <div id="persona-1" style="flex:1;position:relative;cursor:pointer;">
+          <div class="persona-card" style="display:flex;align-items:center;gap:1.2vw;padding:1.4vh 1.4vw;border-radius:var(--rm);border:1.5px solid var(--accent);background:var(--accent-tint);transition:background 0.2s;">
+            <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;">👩</div>
+            <div>
+              <div style="font-family:var(--serif);font-size:13px;font-weight:700;color:var(--accent);">Primary</div>
+              <div style="font-family:var(--sans);font-size:12px;color:var(--text-muted);">Sarah, 55 · family history of AD</div>
+            </div>
+          </div>
+          <div id="persona-detail-1" style="position:absolute;bottom:calc(100% + 10px);left:0;right:0;background:var(--surface);border:1.5px solid var(--accent);border-radius:var(--rm);padding:1.8vh 1.6vw;box-shadow:0 8px 28px -4px rgba(69,107,183,0.18);opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:10;">
+            <div style="font-family:var(--serif);font-size:12px;font-weight:700;color:var(--accent);margin-bottom:0.6vh;">Primary buyer</div>
+            <div style="font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);margin-bottom:0.8vh;">"I watched my mother decline. I want to do something now."</div>
+            <p style="font-family:var(--sans);font-size:12.5px;color:var(--text-muted);line-height:1.65;margin-bottom:0.8vh;">55-year-old woman. Mother had Alzheimer's. She's noticed some word-finding gaps and forgetfulness — nothing alarming, but enough to worry. She researches, takes action. APOE ε4 positive or untested but anxious. Wants a credible, science-backed intervention she can start <em>now</em>, before any diagnosis.</p>
+            <div style="display:flex;gap:1vw;flex-wrap:wrap;">
+              <span style="background:var(--accent-tint);border:1px solid rgba(69,107,183,0.2);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--accent);">Family history</span>
+              <span style="background:var(--accent-tint);border:1px solid rgba(69,107,183,0.2);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--accent);">Early symptoms</span>
+              <span style="background:var(--accent-tint);border:1px solid rgba(69,107,183,0.2);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--accent);">Proactive</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Persona 2 -->
+        <div id="persona-2" style="flex:1;position:relative;cursor:pointer;">
+          <div class="persona-card" style="display:flex;align-items:center;gap:1.2vw;padding:1.4vh 1.4vw;border-radius:var(--rm);border:1.5px solid var(--border);background:var(--bg-deep);transition:background 0.2s;">
+            <div style="flex-shrink:0;width:42px;height:42px;border-radius:50%;background:var(--bg-deep);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;">🧑‍🤝‍🧑</div>
+            <div>
+              <div style="font-family:var(--serif);font-size:13px;font-weight:700;color:var(--text-muted);">Secondary</div>
+              <div style="font-family:var(--sans);font-size:12px;color:var(--text-muted);">Friend or family member · gifting</div>
+            </div>
+          </div>
+          <div id="persona-detail-2" style="position:absolute;bottom:calc(100% + 10px);left:0;right:0;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rm);padding:1.8vh 1.6vw;box-shadow:0 8px 28px -4px rgba(0,0,0,0.1);opacity:0;pointer-events:none;transition:opacity 0.2s;z-index:10;">
+            <div style="font-family:var(--serif);font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:0.6vh;">Secondary buyer</div>
+            <div style="font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);margin-bottom:0.8vh;">"She won't buy it for herself. I will."</div>
+            <p style="font-family:var(--sans);font-size:12.5px;color:var(--text-muted);line-height:1.65;margin-bottom:0.8vh;">Adult child or close friend of someone with a family history of dementia. Bought as a gift — or proactively suggests it. High motivation, high willingness to pay. Drives word-of-mouth. Often more engaged with the science than the primary user.</p>
+            <div style="display:flex;gap:1vw;flex-wrap:wrap;">
+              <span style="background:var(--bg-deep);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);">Gift purchaser</span>
+              <span style="background:var(--bg-deep);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);">Word of mouth</span>
+              <span style="background:var(--bg-deep);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-family:var(--sans);font-size:11px;color:var(--text-muted);">High LTV</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <div class="frame-num">10 / 14</div>
@@ -929,6 +967,20 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
       var el = document.getElementById(sid);
       el.addEventListener('mouseenter', function() { showPanel(map[sid]); });
       el.addEventListener('mouseleave', function() { showPanel(null); });
+    });
+
+    // Persona hover
+    [1, 2].forEach(function(n) {
+      var card = document.getElementById('persona-' + n);
+      var detail = document.getElementById('persona-detail-' + n);
+      card.addEventListener('mouseenter', function() {
+        detail.style.opacity = '1';
+        detail.style.pointerEvents = 'auto';
+      });
+      card.addEventListener('mouseleave', function() {
+        detail.style.opacity = '0';
+        detail.style.pointerEvents = 'none';
+      });
     });
   })();
   </script>
