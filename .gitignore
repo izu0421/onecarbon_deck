@@ -1,0 +1,8 @@
+.DS_Store
+*.pptx
+*.pdf
+assets/pptx_images/
+assets/pptx_2026_images/
+assets/extracted/
+assets/*.emf
+vendor/three.module.js
