@@ -362,6 +362,48 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
 </head>
 <body>
 
+<!-- Password gate -->
+<div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#F7F5F0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;">
+  <div style="text-align:center;max-width:360px;width:100%;padding:0 2rem;">
+    <img src="assets/onecarbon_logo.png" alt="OneCarbon" style="height:36px;width:auto;margin-bottom:3.5rem;opacity:0.9;">
+    <p style="font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:#888;margin-bottom:2rem;font-weight:500;">Confidential · Investor deck</p>
+    <input id="pw-input" type="password" placeholder="Enter password"
+      style="width:100%;padding:14px 18px;border:1.5px solid rgba(0,0,0,0.15);border-radius:10px;font-family:'Outfit',sans-serif;font-size:16px;color:#1a1a18;background:#fff;outline:none;box-sizing:border-box;margin-bottom:12px;transition:border-color 0.2s;"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button onclick="checkPw()"
+      style="width:100%;padding:14px;background:#456BB7;color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background 0.2s;"
+      onmouseover="this.style.background='#2f4f8f'" onmouseout="this.style.background='#456BB7'">
+      Access deck
+    </button>
+    <p id="pw-error" style="font-family:'Outfit',sans-serif;font-size:13px;color:#c0392b;margin-top:10px;min-height:18px;"></p>
+  </div>
+</div>
+
+<script>
+(function() {
+  var HASH = 'e8b0f73e7a268f25042f089c363a7d74af84ab55035ef78d60e1021a941421dd';
+  // Check session
+  if (sessionStorage.getItem('oc_auth') === HASH) {
+    document.getElementById('pw-gate').style.display = 'none';
+  }
+  window.checkPw = async function() {
+    var val = document.getElementById('pw-input').value;
+    var enc = new TextEncoder().encode(val);
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    var hex = Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    if (hex === HASH) {
+      sessionStorage.setItem('oc_auth', HASH);
+      document.getElementById('pw-gate').style.display = 'none';
+    } else {
+      var err = document.getElementById('pw-error');
+      err.textContent = 'Incorrect password.';
+      document.getElementById('pw-input').style.borderColor = '#c0392b';
+      setTimeout(function(){ err.textContent=''; document.getElementById('pw-input').style.borderColor='rgba(0,0,0,0.15)'; }, 2000);
+    }
+  };
+})();
+</script>
+
 <div class="progress-bar" id="progress"></div>
 <div class="kbd-hint" id="hint">Use <kbd>↓</kbd><kbd>↑</kbd> or scroll · <kbd>F</kbd> Fullscreen</div>
 
