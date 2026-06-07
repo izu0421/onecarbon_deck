@@ -121,7 +121,8 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
 .fw-card li::before{content:'';position:absolute;left:0;top:13px;width:6px;height:6px;background:var(--accent);border-radius:50%}
 .supp-panel{position:absolute;inset:0;z-index:50;background:var(--surface);padding:clamp(1.5rem,3.5vw,3.5rem) clamp(1.5rem,4vw,4rem);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity 0.22s ease,transform 0.22s ease;overflow-y:auto;}
 .supp-panel.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
-.supp-panel-close{font-family:var(--serif);font-size:11px;letter-spacing:0.1em;color:var(--accent);font-weight:600;background:none;border:none;padding:0;cursor:pointer;margin-bottom:1.8vh;display:inline-block;}
+.supp-panel-close{font-family:var(--serif);font-size:12px;letter-spacing:0.1em;color:var(--accent);font-weight:700;background:none;border:1.5px solid var(--accent);border-radius:var(--rp);padding:8px 18px;cursor:pointer;margin-bottom:2.5vh;display:inline-flex;align-items:center;gap:6px;transition:background 0.15s,color 0.15s;}
+.supp-panel-close:hover{background:var(--accent);color:var(--surface);}
 
 /* ============ Science (publications) ============ */
 .science{padding:6vh 5vw}
@@ -429,7 +430,7 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
     <div class="frame-mark"><span class="brand-name">One<span class="lg">Carbon</span></span></div>
     <div class="eyebrow reveal">Our innovation</div>
     <h1 class="headline reveal reveal-d1">We <em>discovered</em>, <em>evolved</em>, and <em>validated</em></h1>
-    <p class="subhead reveal reveal-d2" style="margin-top:0.8em;font-size:14px;">Hover each card to explore supplementary data →</p>
+    <p class="subhead reveal reveal-d2" style="margin-top:0.8em;font-size:14px;">Click each card to explore supplementary data →</p>
 
     <div class="fw-cols">
       <div data-supp="discovery" class="supp-trigger">
@@ -438,7 +439,7 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
           <h3>The 1C pathway</h3>
           <div class="fw-sub">AI multiomics → causal mechanism</div>
           <p>ML across proteomic, transcriptomic and metabolomic datasets identified mitochondrial 1C metabolism as the critical neuronal resilience pathway. 5 peer-reviewed Cambridge papers. Genomic validation in human samples.</p>
-          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">↗ Hover to explore</div>
+          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">→ Click to explore</div>
         </div>
       </div>
       <div data-supp="evolution" class="supp-trigger">
@@ -447,7 +448,7 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
           <h3>1C01 probiotic</h3>
           <div class="fw-sub">Directed evolution → over-producer</div>
           <p>Single bacterial strain evolved to over-produce 1C neuroprotective metabolites. Strains deposited at NCIMB. Trade-secret culturing. Food-grade, scalable production.</p>
-          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">↗ Hover to explore</div>
+          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">→ Click to explore</div>
         </div>
       </div>
       <div data-supp="validation" class="supp-trigger">
@@ -456,14 +457,14 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
           <h3>In animals + humans</h3>
           <div class="fw-sub">Preclinical → pilot in human</div>
           <p>Animal models show improved mitochondrial function and lifespan. Human pilot (N=15): 100% gut engraftment, elevated blood biomarkers. Cambridge-led RCT initiation 2027. PROFILE NCT07457242 enrolling.</p>
-          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">↗ Hover to explore</div>
+          <div style="margin-top:1em;font-family:var(--serif);font-size:11px;color:var(--accent);font-weight:600;letter-spacing:0.08em;">→ Click to explore</div>
         </div>
       </div>
     </div>
 
     <!-- Supplementary hover panels -->
     <div id="panel-discovery" class="supp-panel">
-      <button class="supp-panel-close">← Back to Innovation</button>
+      <button class="supp-panel-close">← Return to Innovation</button>
       <div class="eyebrow" style="margin-bottom:0.8vh;">Supplementary · Discovery</div>
       <h2 style="font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);color:var(--text);font-weight:500;margin-bottom:0.4em;letter-spacing:-0.02em;">The <em>1C pathway</em> discovery</h2>
       <p style="font-family:var(--sans);font-size:15px;color:var(--text-muted);margin-bottom:2vh;">AI multiomics found the mitochondrial 1C pathway drives neuronal resilience.</p>
@@ -493,7 +494,7 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
     </div>
 
     <div id="panel-validation" class="supp-panel">
-      <button class="supp-panel-close">← Back to Innovation</button>
+      <button class="supp-panel-close">← Return to Innovation</button>
       <div class="eyebrow" style="margin-bottom:0.8vh;">Supplementary · Validation</div>
       <h2 style="font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);color:var(--text);font-weight:500;margin-bottom:0.4em;letter-spacing:-0.02em;">Laboratory validation of this <em>neuroprotective</em> pathway</h2>
       <p style="font-family:var(--sans);font-size:15px;color:var(--text-muted);margin-bottom:2vh;">Multiple validation approaches confirmed the pathway's neuroprotective role.</p>
@@ -517,7 +518,7 @@ h1.headline{font-size:clamp(34px, 3.4vw, 56px);line-height:1.1;letter-spacing:-0
     </div>
 
     <div id="panel-evolution" class="supp-panel">
-      <button class="supp-panel-close">← Back to Innovation</button>
+      <button class="supp-panel-close">← Return to Innovation</button>
       <div class="eyebrow" style="margin-bottom:0.8vh;">Supplementary · Evolution</div>
       <h2 style="font-family:var(--serif);font-size:clamp(20px,2.2vw,32px);color:var(--text);font-weight:500;margin-bottom:0.4em;letter-spacing:-0.02em;">Proprietary probiotics to <em>boost neuronal health</em></h2>
       <p style="font-family:var(--sans);font-size:15px;color:var(--text-muted);margin-bottom:2vh;">Directed evolution created an over-producing strain with demonstrated efficacy.</p>
@@ -1313,37 +1314,38 @@ google.charts.setOnLoadCallback(() => {
   window.addEventListener('resize', () => { if (sankeyDrawn) { sankeyDrawn = false; drawSankey(); } });
 });
 
-// Supplementary hover panels
+// Supplementary click panels
 (function() {
   var section = document.getElementById('innovation-main');
   if (!section) return;
   var triggers = section.querySelectorAll('[data-supp]');
   var panels = section.querySelectorAll('.supp-panel');
-  var closeTimer = null;
 
   function showPanel(id) {
-    clearTimeout(closeTimer);
     panels.forEach(function(p) { p.classList.remove('visible'); });
     var panel = document.getElementById('panel-' + id);
     if (panel) panel.classList.add('visible');
   }
 
-  function scheduleHide() {
-    clearTimeout(closeTimer);
-    closeTimer = setTimeout(function() {
-      panels.forEach(function(p) { p.classList.remove('visible'); });
-    }, 160);
+  function hideAll() {
+    panels.forEach(function(p) { p.classList.remove('visible'); });
   }
 
   triggers.forEach(function(t) {
-    t.addEventListener('mouseenter', function() { showPanel(t.dataset.supp); });
-    t.addEventListener('mouseleave', scheduleHide);
+    t.style.cursor = 'pointer';
+    t.addEventListener('click', function() {
+      var id = t.dataset.supp;
+      var panel = document.getElementById('panel-' + id);
+      if (panel && panel.classList.contains('visible')) {
+        hideAll();
+      } else {
+        showPanel(id);
+      }
+    });
   });
   panels.forEach(function(p) {
-    p.addEventListener('mouseenter', function() { clearTimeout(closeTimer); });
-    p.addEventListener('mouseleave', scheduleHide);
     var btn = p.querySelector('.supp-panel-close');
-    if (btn) btn.addEventListener('click', function() { p.classList.remove('visible'); });
+    if (btn) btn.addEventListener('click', function() { hideAll(); });
   });
 })();
 </script>
